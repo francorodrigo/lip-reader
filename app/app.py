@@ -25,6 +25,7 @@ if videos:
     with col1:
         st.info('Chosen video:')
         file_path = os.path.join('..', 'data', 's1', selected_video)
+        print("FILE PATH",file_path)
         os.system(f'ffmpeg -i {file_path} -vcodec libx264 test_video.mp4 -y')
         # Rendering
         video = open('test_video.mp4', 'rb')
