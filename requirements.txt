@@ -1,5 +1,5 @@
 opencv-python==4.6.0.66
-matplotlib==3.6.2
+matplotlib==3.8.4
 imageio==2.23.0
 gdown==4.6.0
 tensorflow==2.16.1
