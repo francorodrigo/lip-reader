@@ -1,10 +1,8 @@
 import os 
-from tensorflow.keras.models import Sequential 
-from tensorflow.keras.layers import Conv3D, LSTM, Dense, Dropout, Bidirectional, MaxPool3D, Activation, Reshape, SpatialDropout3D, BatchNormalization, TimeDistributed, Flatten
-
+from keras._tf_keras.keras.models import Sequential 
+from keras._tf_keras.keras.layers import Conv3D, LSTM, Dense, Dropout, Bidirectional, MaxPool3D, Activation, Reshape, SpatialDropout3D, BatchNormalization, TimeDistributed, Flatten
 def load_model() -> Sequential: 
     model = Sequential()
-
     model.add(Conv3D(128, 3, input_shape=(75,46,140,1), padding='same'))
     model.add(Activation('relu'))
     model.add(MaxPool3D((1,2,2)))
@@ -19,15 +17,16 @@ def load_model() -> Sequential:
 
     model.add(TimeDistributed(Flatten()))
 
-    model.add(Bidirectional(LSTM(128, kernel_initializer='Orthogonal', return_sequences=True)))
+    model.add(Bidirectional(LSTM(128, kernel_initializer='orthogonal', return_sequences=True)))
     model.add(Dropout(.5))
 
-    model.add(Bidirectional(LSTM(128, kernel_initializer='Orthogonal', return_sequences=True)))
+    model.add(Bidirectional(LSTM(128, kernel_initializer='orthogonal', return_sequences=True)))
     model.add(Dropout(.5))
 
     model.add(Dense(41, kernel_initializer='he_normal', activation='softmax'))
 
     # Load the existing weights from previous checkpoint
-    model.load_weights(os.path.join('..','models','checkpoint'))
+    model.save_weights(os.path.join('..','models','checkpoint.weights.h5'))
+    model.load_weights(os.path.join('..','models','checkpoint.weights.h5'))
 
     return model
